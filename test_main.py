@@ -42,16 +42,24 @@ class UrbanRoutesPage:
         self.driver = driver
 
     def set_from(self, from_address):
-        self.driver.find_element(*self.from_field).send_keys(from_address)
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.from_field)
+        ).send_keys(from_address)
 
     def set_to(self, to_address):
-        self.driver.find_element(*self.to_field).send_keys(to_address)
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.to_field)
+        ).send_keys(to_address)
 
     def get_from(self):
-        return self.driver.find_element(*self.from_field).get_property('value')
+        return WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.from_field)
+        ).get_property("value")
 
     def get_to(self):
-        return self.driver.find_element(*self.to_field).get_property('value')
+        return WebDriverWait(self.driver, 10).until(
+            expected_conditions.presence_of_element_located(self.to_field)
+        ).get_property("value")
 
 
 
@@ -71,15 +79,11 @@ class TestUrbanRoutes:
 
     def test_set_route(self):
         self.driver.get(data.urban_routes_url)
-
         routes_page = UrbanRoutesPage(self.driver)
-
         address_from = data.address_from
         address_to = data.address_to
-
         routes_page.set_from(address_from)
         routes_page.set_to(address_to)
-
         assert routes_page.get_from() == address_from
         assert routes_page.get_to() == address_to
 
