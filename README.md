@@ -1,4 +1,4 @@
-# Urban Routes — UI Test Automation
+# Urban Routes - UI Test Automation
 
 End-to-end UI tests for Urban Routes, a taxi-booking web app. The suite covers the full ride-request flow, from setting the route to the driver-search modal.
 
