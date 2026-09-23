@@ -1,58 +1,44 @@
-# qa-project-Urban-Routes-es
+# Urban Routes — UI Test Automation
 
-## Descripción del proyecto
+End-to-end UI tests for Urban Routes, a taxi-booking web app. The suite covers the full ride-request flow, from setting the route to the driver-search modal.
 
-Proyecto de automatización de pruebas para la aplicación web Urban Routes, una plataforma de solicitud de taxis. Las pruebas cubren el flujo completo de pedido de un taxi, desde la configuración de la ruta hasta la confirmación del modal de búsqueda de conductor.
+## Stack
+- Python 3 · Selenium WebDriver · pytest
+- Page Object Model: locators and page actions live in `UrbanRoutesPage`, separate from the tests
+- Explicit waits (`WebDriverWait` + Expected Conditions) for dynamic elements
+- Chrome DevTools Protocol (CDP) to intercept the SMS confirmation code
 
-## Tecnologías y técnicas utilizadas
+## What's tested
+Tests live in the `TestUrbanRoutes` class in `test_main.py`.
 
-- **Python 3** — lenguaje de programación principal
-- **Selenium WebDriver** — automatización del navegador
-- **pytest** — framework de ejecución de pruebas
-- **Chrome WebDriver** — navegador utilizado para las pruebas
-- **Page Object Model (POM)** — patrón de diseño utilizado para organizar los localizadores y métodos de la página en la clase `UrbanRoutesPage`, separando la lógica de las pruebas
-- **WebDriverWait / Expected Conditions** — esperas explícitas para manejar elementos dinámicos
-- **Chrome DevTools Protocol (CDP)** — utilizado para interceptar el código de confirmación del teléfono
+| Test | Checks |
+|---|---|
+| `test_set_route` | Origin and destination are set |
+| `test_select_comfort_tariff` | Comfort tariff is selected |
+| `test_fill_phone_number` | Phone number is added and confirmed with the SMS code |
+| `test_add_credit_card` | A credit card is added |
+| `test_write_driver_message` | A message for the driver is saved |
+| `test_request_blanket_and_tissues` | Blanket and tissues are requested |
+| `test_order_2_ice_creams` | Two ice creams are added |
+| `test_taxi_search_modal_appears` | The driver-search modal appears |
 
-## Descripción de las pruebas
-
-Las pruebas están definidas en la clase `TestUrbanRoutes` dentro del archivo `test_main.py` y cubren las siguientes acciones:
-
-1. `test_set_route` — Configurar la dirección de origen y destino
-2. `test_select_comfort_tariff` — Seleccionar la tarifa Comfort
-3. `test_fill_phone_number` — Rellenar el número de teléfono y confirmar con código SMS
-4. `test_add_credit_card` — Agregar una tarjeta de crédito
-5. `test_write_driver_message` — Escribir un mensaje para el conductor
-6. `test_request_blanket_and_tissues` — Solicitar manta y pañuelos
-7. `test_order_2_ice_creams` — Pedir 2 helados
-8. `test_taxi_search_modal_appears` — Verificar que aparece el modal de búsqueda de taxi
-
-## Instrucciones para ejecutar las pruebas
-
-### Requisitos previos
-
-- Python 3 instalado
-- Google Chrome instalado
-- ChromeDriver compatible con la versión de Chrome instalada
-
-### Instalación de dependencias
+## Run it
+Requires Python 3 and Google Chrome. Selenium 4.6+ downloads ChromeDriver automatically.
 
 ```bash
-pip install selenium pytest
+pip install -r requirements.txt
 ```
 
-### Configuración
-
-En el archivo `data.py`, asegúrate de que la URL del servidor esté actualizada:
+The app ran on a temporary TripleTen test server. Set the server URL in `data.py`:
 
 ```python
-urban_routes_url = 'https://<tu-url-del-servidor>?lng=es'
+urban_routes_url = 'https://<your-server-url>?lng=es'
 ```
 
-### Ejecución
-
-Desde la carpeta raíz del proyecto, ejecuta:
+Then run from the project root:
 
 ```bash
 pytest test_main.py -v
 ```
+
+Built as part of the TripleTen QA Engineering program.
